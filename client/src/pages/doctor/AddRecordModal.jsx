@@ -6,24 +6,32 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import useAlert from '../../contexts/AlertContext/useAlert'
 import { Buffer } from "buffer";
 
+
 const AddRecordModal = ({ handleClose, handleUpload, patientAddress }) => {
   const { setAlert } = useAlert()
   const [file, setFile] = useState(null)
-  const [buffer, setBuffer] = useState(null)
+  // const [buffer, setBuffer] = useState(null)
 
-  const handleFileChange = fileObj => {
-    const { file } = fileObj
-    setBuffer(null)
+  // const handleFileChange = fileObj => {
+  //   const { file } = fileObj
+    
+  //   setBuffer(null)
+  //   setFile(file)
+  //   console.log('file.name :>> ', file.name)
+
+  //   const reader = new FileReader()
+  //   reader.readAsArrayBuffer(file)
+  //   reader.onloadend = () => {
+  //     const buffer = Buffer.from(reader.result)
+  //     setBuffer(buffer)
+  //   }
+  // }
+
+ function onChange(e) {
+    const file = e.target.files[0]
     setFile(file)
-    console.log('file.name :>> ', file.name)
-
-    const reader = new FileReader()
-    reader.readAsArrayBuffer(file)
-    reader.onloadend = () => {
-      const buffer = Buffer.from(reader.result)
-      setBuffer(buffer)
-    }
   }
+    
 
   return (
     <Box
@@ -55,22 +63,18 @@ const AddRecordModal = ({ handleClose, handleUpload, patientAddress }) => {
         <Box display='flex' flexDirection='column' my={1}>
           <Typography variant='h4'>Add Record</Typography>
           <Box my={2}>
-            <DropzoneAreaBase
-              onAdd={fileObjs => handleFileChange(fileObjs[0])}
-              onDelete={fileObj => {
-                setFile(null)
-                setBuffer(null)
-              }}
-              onAlert={(message, variant) => setAlert(message, variant)}
-            />
+          <input
+        type="file"
+        onChange={onChange}
+      />
           </Box>
           <Box display='flex' justifyContent='space-between' mb={2}>
             {file && <Chip label={file.name} onDelete={() => setFile(null)} style={{ fontSize: '12px' }} />}
             <Box flexGrow={1} />
             <CustomButton
               text='upload'
-              handleClick={() => handleUpload(file, file.name, patientAddress)}
-              disabled={!file || !buffer}
+              handleClick={() => handleUpload(file,file.name,patientAddress)}
+              disabled={!file}
             />
           </Box>
         </Box>

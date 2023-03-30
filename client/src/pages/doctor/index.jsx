@@ -19,8 +19,9 @@ import { create } from "ipfs-http-client";
 
 import { Buffer } from "buffer";
 
-import { HelpOutline } from '@mui/icons-material'
+import { Build, HelpOutline } from '@mui/icons-material'
 import multibase from 'multibase'
+
 
 Buffer.from("anything", "base64");
 window.Buffer = window.Buffer || require("buffer").Buffer;
@@ -90,7 +91,7 @@ const Doctor = () => {
 
 
   const addRecordCallback = useCallback(  
-     (buffer, fileName, patientAddress) => {
+     (buffer,fileName, patientAddress) => {
       if (!patientAddress) {
         setAlert('Please search for a patient first', 'error')
         return
@@ -101,16 +102,11 @@ const Doctor = () => {
       }
       
       async function addFile(){
-        const res = await ipfs.add(buffer,{
-          pin: true});
-        console.log(res);
+        const res = await ipfs.add(buffer);
         
-        const ipfsHash= res.cid.toV1().bytes;
-
-        const finalfinalhash= encode('base32',ipfsHash) 
-        const finalfinalfinalhash= Buffer.from(finalfinalhash).toString()
-        console.log(finalfinalfinalhash)
-        return finalfinalfinalhash;
+        const ipfsHash= res.path;
+        console.log(ipfsHash)
+        return ipfsHash
      }
 
      
@@ -119,7 +115,8 @@ const Doctor = () => {
      
       async function rec(ipfsHash){
         if (ipfsHash) {
-          await contract.methods.addRecord(ipfsHash, fileName, patientAddress).send({ from: accounts[0] })
+          console.log(ipfsHash);
+          await contract.methods.addRecord(ipfsHash,fileName, patientAddress).send({ from: accounts[0] })
           setAlert('New record uploaded', 'success')
           setAddRecord(false)
       
@@ -130,8 +127,13 @@ const Doctor = () => {
       } 
 
       try {
-      const ipfsHash= addFile();
+        async function fx(){
+      const ipfsHash = await addFile();
+      console.log(ipfsHash)
       rec(ipfsHash);
+      }
+      fx();
+      
       } catch (err) {
         setAlert('Record upload failed', 'error')
         console.error(err)

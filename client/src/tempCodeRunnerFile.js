@@ -1,1 +1,2 @@
-window.Buffer = window.Buffer || require("buffer").Buffer;
+export default ipfs
+
