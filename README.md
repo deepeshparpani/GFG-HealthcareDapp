@@ -4,37 +4,17 @@ This box comes with everything you need to start using Truffle to write, compile
 
 ## Installation
 
-First ensure you are in an empty directory.
+delete package.json outside the client folder
+delete package-lock.json outside client folder
+delete package-lock.json insisde the client folder if it exists
 
-Run the `unbox` command using 1 of 2 ways.
+delete package-lock.json inside the truffle folder if it exists
 
-```sh
-# Install Truffle globally and run `truffle unbox`
-$ npm install -g truffle
-$ truffle unbox react
-```
+go inside client folder and run npm install in the terminal
 
-```sh
-# Alternatively, run `truffle unbox` via npx
-$ npx truffle unbox react
-```
+go inside truffle folder and then run npm install in the terminal
 
-Start the react dev server.
+finally go inside client folder and run : npm run build
 
-```sh
-$ cd client
-$ npm start
-  Starting the development server...
-```
+and then finally serve it.
 
-From there, follow the instructions on the hosted React app. It will walk you through using Truffle and Ganache to deploy the `SimpleStorage` contract, making calls to it, and sending transactions to change the contract's state.
-
-## FAQ
-
-- __How do I use this with Ganache (or any other network)?__
-
-  The Truffle project is set to deploy to Ganache by default. If you'd like to change this, it's as easy as modifying the Truffle config file! Check out [our documentation on adding network configurations](https://trufflesuite.com/docs/truffle/reference/configuration/#networks). From there, you can run `truffle migrate` pointed to another network, restart the React dev server, and see the change take place.
-
-- __Where can I find more resources?__
-
-  This Box is a sweet combo of [Truffle](https://trufflesuite.com) and [Create React App](https://create-react-app.dev). Either one would be a great place to start!
