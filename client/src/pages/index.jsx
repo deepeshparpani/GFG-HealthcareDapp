@@ -107,7 +107,7 @@ const Home = () => {
             <h1 style={{fontSize:100,color:'cyan'}}>Health-care Dapp</h1>
           <Box mt={2} mb={5}>
             <Typography variant='h4' color='white'>
-              Own Your Health
+              Manage your own health
             </Typography>
           </Box>
           <ActionSection />
